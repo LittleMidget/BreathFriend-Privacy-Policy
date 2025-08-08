@@ -3,184 +3,373 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Wear OS Guided Breathing - Privacy Policy</title>
+    <title>BreathFriend - Privacy Policy</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Chosen Palette: Calm Neutrals -->
+    <!-- Application Structure Plan: A tab-based single-page application. This structure is chosen to transform the dense, linear privacy policy into a user-friendly, explorable interface. Users can immediately navigate to the section that interests them (e.g., 'What We Collect', 'Your Rights') instead of scrolling through a long document. This non-linear, interactive approach enhances readability, transparency, and user comprehension, which is the ultimate goal of a modern privacy policy. The flow is: User lands on a simple overview, then freely explores categorized, bite-sized information via tabs and interactive cards. -->
+    <!-- Visualization & Content Choices: 
+        - Report Info: 'Information We Collect' tables -> Goal: Clarify data collection. -> Viz/Method: Interactive 'drill-down' cards for Firebase & RevenueCat, revealing data categories and details on click. -> Justification: Breaks down complex tables into a guided, less intimidating discovery process. -> Library: Vanilla JS + Tailwind.
+        - Report Info: 'How We Use Your Information' list -> Goal: Explain purpose of collection. -> Viz/Method: Grid of cards with icons and short titles. -> Justification: Visually engaging and easily scannable compared to a list of paragraphs. -> Library: Unicode Icons + Vanilla JS + Tailwind.
+        - Report Info: 'Your Privacy Rights' section -> Goal: Make rights understandable. -> Viz/Method: Accordion-style component. -> Justification: Standard, intuitive pattern for FAQ-style content, allowing users to focus on one item at a time. -> Library: Vanilla JS + Tailwind.
+    -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
     <style>
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            line-height: 1.6;
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-            color: #333;
+        html {
+            scroll-behavior: smooth;
         }
-        h1 {
-            color: #2c3e50;
-            border-bottom: 3px solid #3498db;
-            padding-bottom: 10px;
+        .tab-active {
+            border-color: #0d9488; /* teal-600 */
+            color: #0f766e; /* teal-700 */
+            font-weight: 600;
         }
-        h2 {
-            color: #34495e;
-            margin-top: 30px;
+        .tab-inactive {
+            border-color: transparent;
+            color: #475569; /* slate-600 */
         }
-        h3 {
-            color: #7f8c8d;
+        .tab-inactive:hover {
+            border-color: #cbd5e1; /* slate-300 */
+            color: #1e293b; /* slate-800 */
         }
-        .developer-info {
-            background: #f8f9fa;
-            padding: 15px;
-            border-radius: 8px;
-            margin: 20px 0;
+        .data-card {
+            transition: all 0.2s ease-in-out;
         }
-        .developer-info strong {
-            color: #2c3e50;
+        .data-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
         }
-        .summary-box {
-            background: #e8f4fd;
-            padding: 20px;
-            border-radius: 8px;
-            border-left: 4px solid #3498db;
-            margin: 20px 0;
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-in-out;
         }
-        .feature-icon {
-            font-size: 1.2em;
-            margin-right: 8px;
+        .accordion-content.open {
+            max-height: 500px; /* Adjust as needed */
         }
-        .contact-info {
-            background: #f1f2f6;
-            padding: 20px;
-            border-radius: 8px;
-            margin-top: 30px;
+        .fade-in {
+            animation: fadeIn 0.5s ease-in-out;
         }
-        ul {
-            padding-left: 20px;
-        }
-        li {
-            margin: 5px 0;
-        }
-        .collapsible {
-            background: #f8f9fa;
-            padding: 10px 15px;
-            border-radius: 5px;
-            margin: 10px 0;
-            cursor: pointer;
-            border-left: 3px solid #3498db;
-        }
-        .collapsible:hover {
-            background: #e9ecef;
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
     </style>
 </head>
-<body>
-    <h1>Wear OS Guided Breathing Privacy Policy</h1>
-    
-    <div class="developer-info">
-        <strong>Developer:</strong> Vitality Trails<br>
-        <strong>App Name:</strong> Wear OS Guided Breathing (formerly BreathFriend)<br>
-        <strong>Contact:</strong> vortrekdev@gmail.com<br>
-        <strong>Effective Date:</strong> June 10, 2025
-    </div>
-
-    <nav>
-        <ul>
-            <li><a href="#overview">Overview</a></li>
-            <li><a href="#data-collect">What We Collect</a></li>
-            <li><a href="#data-use">Why We Use It</a></li>
-            <li><a href="#data-share">How We Share It</a></li>
-            <li><a href="#your-rights">Your Rights & More</a></li>
-        </ul>
-    </nav>
-
-    <div class="summary-box">
-        <h2>A Quick Summary</h2>
-        <p>Welcome to the Wear OS Guided Breathing privacy policy. This document explains what information we collect, how we use it, and the choices you have. Our goal is to be transparent and protect your privacy while we work to improve your experience with our app.</p>
+<body class="bg-slate-50 font-sans text-slate-800">
+    <div class="max-w-5xl mx-auto p-4 sm:p-6 lg:p-8">
         
-        <p><strong>Privacy First:</strong> Wear OS Guided Breathing is designed with your privacy in mind. <strong>We collect NO personal data</strong> and <strong>we never sell your information.</strong> All your breathing session data and settings are stored locally on your device only.</p>
+        <header class="text-center mb-8">
+            <h1 class="text-3xl sm:text-4xl font-bold text-slate-900">BreathFriend Privacy Policy</h1>
+            <p class="mt-2 text-slate-600">Your privacy is important to us. Explore how we handle your data.</p>
+            <p class="mt-1 text-sm text-slate-500">Effective Date: June 10, 2025</p>
+        </header>
+
+        <div class="sticky top-0 z-10 bg-slate-50/80 backdrop-blur-sm mb-8">
+            <nav class="border-b border-slate-200">
+                <ul class="flex flex-wrap -mb-px text-sm font-medium text-center">
+                    <li class="mr-2">
+                        <button class="tab-btn inline-block p-4 border-b-2 rounded-t-lg tab-active" data-tab="overview">Overview</button>
+                    </li>
+                    <li class="mr-2">
+                        <button class="tab-btn inline-block p-4 border-b-2 rounded-t-lg tab-inactive" data-tab="collection">What We Collect</button>
+                    </li>
+                    <li class="mr-2">
+                        <button class="tab-btn inline-block p-4 border-b-2 rounded-t-lg tab-inactive" data-tab="usage">Why We Use It</button>
+                    </li>
+                    <li class="mr-2">
+                        <button class="tab-btn inline-block p-4 border-b-2 rounded-t-lg tab-inactive" data-tab="sharing">How We Share It</button>
+                    </li>
+                    <li>
+                        <button class="tab-btn inline-block p-4 border-b-2 rounded-t-lg tab-inactive" data-tab="rights">Your Rights & More</button>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+
+        <main id="tab-content-container">
+            <!-- Overview Tab -->
+            <div id="overview" class="tab-content fade-in">
+                <div class="bg-white p-6 rounded-lg shadow-sm border border-slate-200">
+                    <h2 class="text-2xl font-semibold text-slate-800 mb-4">A Quick Summary</h2>
+                    <p class="text-slate-600 mb-4">
+                        Welcome to the BreathFriend privacy policy. This document explains what information we collect, how we use it, and the choices you have. Our goal is to be transparent and protect your privacy while we work to improve your experience with our app.
+                    </p>
+                    <div class="space-y-3 text-slate-700">
+                        <p>By using BreathFriend, you agree to this policy. We only collect data to make the app better and more reliable. We use services like Firebase Analytics for this. We will never sell your data.</p>
+                        <p>If we add features like in-app purchases in the future, we will use trusted services like RevenueCat to handle them securely. This policy will be updated to reflect any changes. If you have questions, you can always reach us at <a href="mailto:vortrekdev@gmail.com" class="text-teal-600 hover:underline">vortrekdev@gmail.com</a>.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Data Collection Tab -->
+            <div id="collection" class="tab-content hidden fade-in">
+                <div class="bg-white p-6 rounded-lg shadow-sm border border-slate-200">
+                    <h2 class="text-2xl font-semibold text-slate-800 mb-2">Data We Collect</h2>
+                    <p class="text-slate-600 mb-6">To provide and improve our service, we use trusted third-party services that automatically collect certain data. Here is a breakdown of what is collected and by which service.</p>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <!-- Firebase Card -->
+                        <div class="data-card bg-slate-50 p-6 rounded-lg border border-slate-200 cursor-pointer" onclick="showDetail('firebase')">
+                            <h3 class="text-xl font-semibold text-slate-800 mb-2">Firebase Analytics</h3>
+                            <p class="text-slate-600">We use Firebase to understand how you use the app, which helps us improve features and fix bugs. This data is aggregated and anonymized.</p>
+                            <span class="mt-4 inline-block text-teal-600 font-semibold hover:underline">Click to see details &rarr;</span>
+                        </div>
+                        
+                        <!-- RevenueCat Card -->
+                        <div class="data-card bg-slate-50 p-6 rounded-lg border border-slate-200 cursor-pointer" onclick="showDetail('revenuecat')">
+                            <h3 class="text-xl font-semibold text-slate-800 mb-2">RevenueCat (Future Use)</h3>
+                            <p class="text-slate-600">If we introduce premium features, we will use RevenueCat to securely manage in-app purchases and subscriptions.</p>
+                            <span class="mt-4 inline-block text-teal-600 font-semibold hover:underline">Click to see details &rarr;</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Detail Views -->
+                <div id="firebase-detail" class="hidden mt-6 bg-white p-6 rounded-lg shadow-sm border border-slate-200">
+                    <h3 class="text-xl font-semibold mb-4 text-slate-800">Data Collected by Firebase Analytics</h3>
+                     <div class="space-y-4">
+                        <div>
+                            <h4 class="font-semibold text-slate-700">Identifiers</h4>
+                            <p class="text-sm text-slate-600">Anonymous app-instance ID and, if permitted by you, the Android Advertising ID to calculate user metrics.</p>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-slate-700">Device Information</h4>
+                            <p class="text-sm text-slate-600">Device type, model, OS version, and app version to optimize performance and fix bugs.</p>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-slate-700">Usage Data</h4>
+                            <p class="text-sm text-slate-600">Session duration, features used, screens viewed, and crash reports to analyze engagement and improve stability.</p>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-slate-700">Approximate Geolocation</h4>
+                            <p class="text-sm text-slate-600">Country and city derived from your IP address to understand regional usage patterns.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="revenuecat-detail" class="hidden mt-6 bg-white p-6 rounded-lg shadow-sm border border-slate-200">
+                    <h3 class="text-xl font-semibold mb-4 text-slate-800">Data Processed by RevenueCat (For In-App Purchases)</h3>
+                    <p class="text-slate-600 text-sm mb-4">This data is only collected if you make an in-app purchase. We do not see or store your credit card information.</p>
+                     <div class="space-y-4">
+                        <div>
+                            <h4 class="font-semibold text-slate-700">Purchase Information</h4>
+                            <p class="text-sm text-slate-600">Purchase history and subscription status (e.g., active, expired) to unlock features and provide support.</p>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-slate-700">Identifiers</h4>
+                            <p class="text-sm text-slate-600">Anonymized user ID to link your purchases to your account without personally identifying you.</p>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-slate-700">Transaction Data</h4>
+                            <p class="text-sm text-slate-600">Secure transaction receipts from the Google Play Store to validate your purchases.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Usage Tab -->
+            <div id="usage" class="tab-content hidden fade-in">
+                 <div class="bg-white p-6 rounded-lg shadow-sm border border-slate-200">
+                    <h2 class="text-2xl font-semibold text-slate-800 mb-2">Why We Use Your Information</h2>
+                    <p class="text-slate-600 mb-6">We use the data we collect for specific purposes, always with the goal of improving your experience and operating our service effectively.</p>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <div class="bg-slate-50 p-6 rounded-lg border border-slate-200">
+                            <span class="text-3xl">🛠️</span>
+                            <h3 class="text-lg font-semibold mt-2 mb-1">Provide & Improve the App</h3>
+                            <p class="text-sm text-slate-600">We use data to operate the app, fix bugs, resolve crashes, and enhance stability and features.</p>
+                        </div>
+                         <div class="bg-slate-50 p-6 rounded-lg border border-slate-200">
+                            <span class="text-3xl">📊</span>
+                            <h3 class="text-lg font-semibold mt-2 mb-1">Analytics & Insights</h3>
+                            <p class="text-sm text-slate-600">We analyze aggregated usage data to understand which features are popular and how we can improve the app's design.</p>
+                        </div>
+                         <div class="bg-slate-50 p-6 rounded-lg border border-slate-200">
+                            <span class="text-3xl">💳</span>
+                            <h3 class="text-lg font-semibold mt-2 mb-1">Process Transactions</h3>
+                            <p class="text-sm text-slate-600">In the future, we'll use purchase data to manage subscriptions and unlock premium content for you.</p>
+                        </div>
+                         <div class="bg-slate-50 p-6 rounded-lg border border-slate-200">
+                            <span class="text-3xl">⚖️</span>
+                            <h3 class="text-lg font-semibold mt-2 mb-1">Legal Compliance</h3>
+                            <p class="text-sm text-slate-600">We may use information if required to comply with laws, regulations, or enforceable governmental requests.</p>
+                        </div>
+                         <div class="bg-slate-50 p-6 rounded-lg border border-slate-200">
+                            <span class="text-3xl">💬</span>
+                            <h3 class="text-lg font-semibold mt-2 mb-1">Communication</h3>
+                            <p class="text-sm text-slate-600">If you contact us for support, we will use the information you provide to assist you.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sharing Tab -->
+            <div id="sharing" class="tab-content hidden fade-in">
+                 <div class="bg-white p-6 rounded-lg shadow-sm border border-slate-200">
+                    <h2 class="text-2xl font-semibold text-slate-800 mb-2">How We Share Information</h2>
+                    <p class="text-slate-600 mb-6">We do not sell your personal data. We only share information in limited circumstances with trusted partners who help us operate and improve the app.</p>
+                    <div class="space-y-6">
+                        <div class="p-6 rounded-lg bg-slate-50 border border-slate-200">
+                            <h3 class="text-lg font-semibold">With Service Providers</h3>
+                            <p class="text-slate-600 mt-1">We share data with third-party services that perform tasks on our behalf. They are contractually bound to protect your data and only use it for the services they provide.</p>
+                            <ul class="list-disc list-inside mt-3 space-y-2 text-sm text-slate-700">
+                                <li><strong>Google (for Firebase Analytics):</strong> To provide analytics and crash reporting. <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer" class="text-teal-600 hover:underline">Learn more.</a></li>
+                                <li><strong>RevenueCat (for future IAPs):</strong> To process payments and manage subscriptions. <a href="https://www.revenuecat.com/privacy" target="_blank" rel="noopener noreferrer" class="text-teal-600 hover:underline">Learn more.</a></li>
+                            </ul>
+                        </div>
+                        <div class="p-6 rounded-lg bg-slate-50 border border-slate-200">
+                            <h3 class="text-lg font-semibold">For Legal Reasons</h3>
+                            <p class="text-slate-600 mt-1">We may disclose your information if we believe it's necessary to comply with the law, enforce our policies, or protect the rights, property, or safety of our company, our users, or the public.</p>
+                        </div>
+                         <div class="p-6 rounded-lg bg-slate-50 border border-slate-200">
+                            <h3 class="text-lg font-semibold">Aggregated or Anonymized Data</h3>
+                            <p class="text-slate-600 mt-1">We may share anonymized, aggregated data (which cannot be used to identify you) for research or industry analysis.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Rights Tab -->
+            <div id="rights" class="tab-content hidden fade-in">
+                <div class="bg-white p-6 rounded-lg shadow-sm border border-slate-200">
+                    <h2 class="text-2xl font-semibold text-slate-800 mb-6">Your Rights & Other Important Policies</h2>
+                    <div class="space-y-2">
+                        <!-- Accordion Item 1 -->
+                        <div class="border border-slate-200 rounded-lg">
+                            <button class="accordion-btn w-full flex justify-between items-center text-left p-4 font-semibold">
+                                <span>What are my privacy rights?</span>
+                                <span class="transform transition-transform duration-200">▼</span>
+                            </button>
+                            <div class="accordion-content">
+                                <div class="p-4 border-t border-slate-200 text-slate-600 space-y-2">
+                                    <p>Depending on your location, you may have rights to access, correct, delete, or restrict the use of your personal information. We do not sell your data. To exercise any of your rights, please contact us.</p>
+                                </div>
+                            </div>
+                        </div>
+                         <!-- Accordion Item 2 -->
+                        <div class="border border-slate-200 rounded-lg">
+                            <button class="accordion-btn w-full flex justify-between items-center text-left p-4 font-semibold">
+                                <span>How do you protect my data?</span>
+                                <span class="transform transition-transform duration-200">▼</span>
+                            </button>
+                            <div class="accordion-content">
+                                <div class="p-4 border-t border-slate-200 text-slate-600 space-y-2">
+                                    <p>We take data security seriously. We use industry-standard measures like HTTPS to encrypt data in transit and rely on the robust security practices of our service providers like Google and RevenueCat. However, no method is 100% secure, so we cannot guarantee absolute security.</p>
+                                </div>
+                            </div>
+                        </div>
+                         <!-- Accordion Item 3 -->
+                        <div class="border border-slate-200 rounded-lg">
+                            <button class="accordion-btn w-full flex justify-between items-center text-left p-4 font-semibold">
+                                <span>What about data retention?</span>
+                                <span class="transform transition-transform duration-200">▼</span>
+                            </button>
+                            <div class="accordion-content">
+                                <div class="p-4 border-t border-slate-200 text-slate-600 space-y-2">
+                                    <p>We retain data only as long as necessary to provide our services and for legitimate business purposes. Analytics data is subject to the retention settings we configure in Firebase, and we aim to keep it only as long as needed for analysis.</p>
+                                </div>
+                            </div>
+                        </div>
+                         <!-- Accordion Item 4 -->
+                        <div class="border border-slate-200 rounded-lg">
+                            <button class="accordion-btn w-full flex justify-between items-center text-left p-4 font-semibold">
+                                <span>Is this app for children?</span>
+                                <span class="transform transition-transform duration-200">▼</span>
+                            </button>
+                            <div class="accordion-content">
+                                <div class="p-4 border-t border-slate-200 text-slate-600 space-y-2">
+                                    <p>No. BreathFriend is not designed for or targeted at children under 13. We do not knowingly collect personal information from children. If you believe your child has provided us with information, please contact us immediately so we can remove it.</p>
+                                </div>
+                            </div>
+                        </div>
+                         <!-- Accordion Item 5 -->
+                        <div class="border border-slate-200 rounded-lg">
+                            <button class="accordion-btn w-full flex justify-between items-center text-left p-4 font-semibold">
+                                <span>How will I know if this policy changes?</span>
+                                <span class="transform transition-transform duration-200">▼</span>
+                            </button>
+                            <div class="accordion-content">
+                                <div class="p-4 border-t border-slate-200 text-slate-600 space-y-2">
+                                    <p>We may update this policy from time to time. We will notify you of any significant changes by posting the new policy here and updating the "Effective Date" at the top. We encourage you to review it periodically.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </main>
         
-        <p>This policy will be updated if we make any changes to our data practices. If you have questions, you can always reach us at vortrekdev@gmail.com.</p>
+        <footer class="text-center mt-12 border-t border-slate-200 pt-8">
+            <h3 class="text-xl font-semibold text-slate-800">Contact Us</h3>
+            <p class="text-slate-600 mt-2">If you have any questions about this Privacy Policy, please contact us:</p>
+            <a href="mailto:vortrekdev@gmail.com" class="mt-2 inline-block text-teal-600 hover:text-teal-700 font-semibold text-lg">vortrekdev@gmail.com</a>
+        </footer>
+
     </div>
 
-    <h2 id="data-collect">Data We Collect</h2>
-    <p><strong>We collect NO personal data.</strong> Here's what actually happens with your information:</p>
+    <script>
+        const tabButtons = document.querySelectorAll('.tab-btn');
+        const tabContents = document.querySelectorAll('.tab-content');
+        const accordionButtons = document.querySelectorAll('.accordion-btn');
 
-    <h3>🔒 Local Data Only</h3>
-    <p>All data related to your breathing sessions, custom presets, and app settings are stored locally on your Wear OS device only. This data never leaves your watch.</p>
+        tabButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const tabId = button.dataset.tab;
 
-    <h3>📱 Device Information (Local Only)</h3>
-    <p>The app may access basic device information (like screen size, OS version) to optimize the user interface, but this information is used locally and never transmitted anywhere.</p>
+                tabButtons.forEach(btn => {
+                    btn.classList.remove('tab-active');
+                    btn.classList.add('tab-inactive');
+                });
+                button.classList.add('tab-active');
+                button.classList.remove('tab-inactive');
 
-    <h3>🚫 No Third-Party Services</h3>
-    <p><strong>We do not use:</strong></p>
-    <ul>
-        <li>❌ No Firebase Analytics</li>
-        <li>❌ No Google Analytics</li>
-        <li>❌ No crash reporting services</li>
-        <li>❌ No advertising networks</li>
-        <li>❌ No payment processing (app is paid upfront)</li>
-    </ul>
+                tabContents.forEach(content => {
+                    if (content.id === tabId) {
+                        content.classList.remove('hidden');
+                    } else {
+                        content.classList.add('hidden');
+                    }
+                });
 
-    <h2 id="data-use">How We Use Your Information</h2>
-    <p>Since we collect no personal data, here's how the app actually works:</p>
+                // Hide detail views when switching tabs
+                document.getElementById('firebase-detail').classList.add('hidden');
+                document.getElementById('revenuecat-detail').classList.add('hidden');
+            });
+        });
 
-    <h3><span class="feature-icon">🛠️</span>App Functionality</h3>
-    <p>Your breathing session data (duration, preset settings, custom breathing patterns) is stored locally on your watch to provide the app's core functionality. This data never leaves your device.</p>
+        accordionButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const content = button.nextElementSibling;
+                const icon = button.querySelector('span:last-child');
+                const isOpen = content.classList.contains('open');
 
-    <h3><span class="feature-icon">⚖️</span>Legal Compliance</h3>
-    <p>We may be required to comply with laws, regulations, or enforceable governmental requests, but since we collect no data about you, there's nothing to disclose.</p>
-
-    <h3><span class="feature-icon">💬</span>Communication</h3>
-    <p>If you contact us for support via email, we will only use the information you voluntarily provide to assist you with your inquiry.</p>
-
-    <h2 id="data-share">How We Share Information</h2>
-    <p><strong>We don't share your data because we don't collect it.</strong> Here's our complete data sharing policy:</p>
-
-    <h3>🚫 No Third-Party Sharing</h3>
-    <p><strong>We do not share data with any third parties because:</strong></p>
-    <ul>
-        <li>✅ No analytics services are used</li>
-        <li>✅ No advertising networks are integrated</li>
-        <li>✅ No cloud storage of user data</li>
-        <li>✅ No social media integrations</li>
-        <li>✅ No data brokers or marketing companies</li>
-    </ul>
-
-    <h3>Legal Requests</h3>
-    <p>Since we collect no personal data, we have no user data to share even if legally required to do so.</p>
-
-    <h2 id="your-rights">Your Rights & Other Important Policies</h2>
-
-    <div class="collapsible">
-        <strong>What are my privacy rights?</strong><br>
-        <p>Since we collect no personal data about you, there's no personal information to access, correct, or delete. Your breathing session data is stored locally on your device and is fully under your control. You can clear this data by uninstalling the app.</p>
-    </div>
-
-    <div class="collapsible">
-        <strong>How do you protect my data?</strong><br>
-        <p>Your data protection is built into our design: we simply don't collect personal data. All your breathing sessions and settings are stored locally on your Wear OS device using Android's standard app data protection. No data leaves your watch, so there's no data in transit to protect.</p>
-    </div>
-
-    <div class="collapsible">
-        <strong>What about data retention?</strong><br>
-        <p>Since all data is stored locally on your device, you control data retention. Your breathing session history and custom presets remain on your watch until you delete them manually or uninstall the app. We don't retain any data about you on our servers because we don't collect any.</p>
-    </div>
-
-    <div class="collapsible">
-        <strong>Is this app for children?</strong><br>
-        <p>No. Wear OS Guided Breathing is not designed for or targeted at children under 13. We do not knowingly collect personal information from children. If you believe your child has provided us with information, please contact us immediately so we can remove it.</p>
-    </div>
-
-    <div class="collapsible">
-        <strong>How will I know if this policy changes?</strong><br>
-        <p>We may update this policy from time to time. We will notify you of any significant changes by posting the new policy here and updating the "Effective Date" at the top. We encourage you to review it periodically.</p>
-    </div>
-
-    <div class="contact-info">
-        <h3>Contact Us</h3>
-        <p>If you have any questions about this Privacy Policy, please contact us:</p>
-        <p>
-            <strong>Email:</strong> vortrekdev@gmail.com<br>
-            <strong>Developer:</strong> Vitality Trails<br>
-            <strong>App:</strong> Wear OS Guided Breathing
-        </p>
-    </div>
+                // Optional: close other accordions
+                // accordionButtons.forEach(btn => {
+                //    btn.nextElementSibling.classList.remove('open');
+                //    btn.querySelector('span:last-child').style.transform = '';
+                // });
+                
+                if (isOpen) {
+                    content.classList.remove('open');
+                    icon.style.transform = '';
+                } else {
+                    content.classList.add('open');
+                    icon.style.transform = 'rotate(180deg)';
+                }
+            });
+        });
+        
+        function showDetail(service) {
+            const firebaseDetail = document.getElementById('firebase-detail');
+            const revenuecatDetail = document.getElementById('revenuecat-detail');
+            
+            if (service === 'firebase') {
+                firebaseDetail.classList.remove('hidden');
+                revenuecatDetail.classList.add('hidden');
+            } else if (service === 'revenuecat') {
+                revenuecatDetail.classList.remove('hidden');
+                firebaseDetail.classList.add('hidden');
+            }
+        }
+    </script>
 </body>
-</html> 
+</html>
